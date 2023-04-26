@@ -14,7 +14,7 @@ def average_exchange_rate():
     while True:
         if date.weekday() >= 5:  # Saturday or Sunday
             return jsonify({'error': 'Weekend dates do not return data.'}), 400
-        url = f'http://app.nbp.pl/app/exchangerates/rates/a/{currency_code}/{date.date()}/'
+        url = f'http://api.nbp.pl/api/exchangerates/rates/a/{currency_code}/{date.date()}/'
         response = requests.get(url)
         if response.status_code == 200:
             rate = response.json()['rates'][0]['mid']
@@ -35,7 +35,7 @@ def max_min_average():
         return jsonify({'error': 'Invalid count value. Please provide an integer between 1 and 255.'}), 400
     if not 1 <= count <= 255:
         return jsonify({'error': 'Invalid count value. Please provide an integer between 1 and 255.'}), 400
-    url = f'http://app.nbp.pl/app/exchangerates/rates/a/{currency_code}/last/{count}/'
+    url = f'http://api.nbp.pl/api/exchangerates/rates/a/{currency_code}/last/{count}/'
     response = requests.get(url)
     if response.status_code != 200:
         return jsonify({'error': 'Could not get max and min average.'}), 500
@@ -55,7 +55,7 @@ def major_difference():
         return jsonify({'error': 'Invalid count value. Please provide an integer between 1 and 255.'}), 400
     if not 1 <= count <= 255:
         return jsonify({'error': 'Invalid count value. Please provide an integer between 1 and 255.'}), 400
-    url = f'http://app.nbp.pl/app/exchangerates/rates/c/{currency_code}/last/{count}/'
+    url = f'http://api.nbp.pl/api/exchangerates/rates/c/{currency_code}/last/{count}/'
     response = requests.get(url)
     if response.status_code != 200:
         return jsonify({'error': 'Could not get major difference.'}), 500
